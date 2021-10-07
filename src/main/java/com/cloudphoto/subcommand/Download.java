@@ -29,6 +29,7 @@ public final class Download implements Runnable {
 
             try {
                 if (Files.exists(paths)) {
+                    System.out.println("Download...\n");
                     download();
                 } else System.err.println("Path is not exists");
             } catch (IOException e) {
@@ -50,6 +51,7 @@ public final class Download implements Runnable {
                     obj = s3Object.getObjectContent();
                     Files.copy(obj, Paths.get(path + "/" + s3Object.getKey().split("/")[1]));
                 }
+                System.out.println("Done!");
             } else System.out.println(album + " is empty");
 
         } catch (FileAlreadyExistsException e) {

@@ -2,20 +2,20 @@ package com.cloudphoto.s3;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.EnvironmentVariableCredentialsProvider;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.*;
-import com.cloudphoto.util.PropertiesUtil;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class AmazonS3Configuration implements CrudS3 {
-    private static final String PATH = "src/main/resources/application.properties";
     private static final String ENDPOINT = "storage.yandexcloud.net";
     private static final String REGION = "ru-central1";
     private static final String BUCKET_NAME = "cloudphoto";
@@ -83,16 +83,8 @@ public class AmazonS3Configuration implements CrudS3 {
     }
 
     private AmazonS3 createS3Context() {
-        PropertiesCredentials credentials = null;
-        try {
-            credentials = new PropertiesCredentials(new File(PATH));
-        } catch (Exception e) {
-            throw new AmazonClientException(
-                    "Cannot load the credentials from the credential profiles file. ", e);
-        }
-
         return AmazonS3ClientBuilder.standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .withCredentials(new ProfileCredentialsProvider())
                 .withEndpointConfiguration(
                         new AmazonS3ClientBuilder.EndpointConfiguration(ENDPOINT, REGION)
                 )

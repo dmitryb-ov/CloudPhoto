@@ -31,8 +31,9 @@ public final class Upload implements Runnable {
                             && (FilenameUtils.getExtension(filePath.toString()).equals("jpeg")
                             || FilenameUtils.getExtension(filePath.toString()).equals("jpg"))) {
                         var s3 = new AmazonS3Dto();
+                        System.out.println("Upload...\n");
                         s3.upload(filePath.toFile(), album);
-                        System.out.println(filePath);
+                        System.out.println("Done!");
                     }
                 });
             } catch (NoSuchFileException e) {
