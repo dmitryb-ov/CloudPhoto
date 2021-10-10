@@ -15,7 +15,7 @@
     
     1.3 Прописываем в консоли одну из следующих нужных нам комманд
 
-`java -jar cloudphoto.jar upload -a album -p  source path` - загрузить фото из папки в альбом
+`java -jar cloudphoto.jar upload -a album -p  'source path'` - загрузить фото из папки в альбом
 
 `java -jar cloudphoto.jar download -a album -p path` - скачать фото из альбома в папку
 
