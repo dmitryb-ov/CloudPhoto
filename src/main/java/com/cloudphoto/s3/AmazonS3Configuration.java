@@ -63,7 +63,7 @@ public class AmazonS3Configuration implements CrudS3 {
     }
 
     @Override
-    public List<String> list(String album) {
+    public List<String> list(String album) throws ArrayIndexOutOfBoundsException {
         ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(BUCKET_NAME).withPrefix(album);
         ListObjectsV2Result result;
         List<String> photoNames = new ArrayList<>();

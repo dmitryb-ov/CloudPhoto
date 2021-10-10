@@ -25,24 +25,24 @@ public final class Upload implements Runnable {
     @Override
     public void run() {
         if (!path.isBlank() && !album.isBlank()) {
+            System.out.println("Upload...");
             try (Stream<Path> paths = Files.walk(Paths.get(path))) {
                 paths.forEach(filePath -> {
                     if (Files.isRegularFile(filePath)
                             && (FilenameUtils.getExtension(filePath.toString()).equals("jpeg")
                             || FilenameUtils.getExtension(filePath.toString()).equals("jpg"))) {
                         var s3 = new AmazonS3Dto();
-                        System.out.println("Upload...\n");
                         s3.upload(filePath.toFile(), album);
-                        System.out.println("Done!");
                     }
                 });
+                System.out.println("Done!");
             } catch (NoSuchFileException e) {
-                System.err.println(e.getMessage() + " not found");
+                System.err.println(e.getMessage() + " or jpg and jpeg not found");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            System.err.println("Path or album is empty");
+            System.err.println("--path or --album is empty");
         }
     }
 }

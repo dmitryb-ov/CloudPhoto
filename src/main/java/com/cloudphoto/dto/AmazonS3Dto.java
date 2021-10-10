@@ -31,7 +31,7 @@ public class AmazonS3Dto implements CrudS3 {
     }
 
     @Override
-    public List<String> list(String album) {
+    public List<String> list(String album) throws ArrayIndexOutOfBoundsException {
         return s3.list(album);
     }
 }

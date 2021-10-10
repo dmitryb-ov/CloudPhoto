@@ -1,8 +1,13 @@
 ## **Cloud Photo Беляков Дмитрий**
 
-#### Запуск приложения происходит путем скачивания готового архива или же собственная сборка
-##### 1. Скачивание готового архива
-    1.1 Скачиваем архив cloudphoto.zip
+Перед скачиванием необходимо в `~/.aws` создать файл `credentials` и `config` с `access key` и `secret key` от сервисного аккаунта `Yandex Cloud`. Подробнее: https://cloud.yandex.ru/docs/storage/tools/aws-sdk-java
+
+Без данного действия будет невозможен доступ в Яндекс.Обалко
+
+### Запуск приложения происходит путем скачивания готового архива или же собственная сборка
+
+#### 1. Скачивание готового архива
+    1.1 Скачиваем архив, находящийся в корне проекта cloudphoto.zip
 
     1.2 Распаковываем в нужную директорию и переходим в каталог **cloudphoto/**
 
@@ -29,9 +34,9 @@
     2.4 Прописываем в консоли одну из следующих нужных нам комманд
 
 
-`java -jar cloudphoto.jar upload -a album -p  source path` - загрузить фото из папки в альбом
+`java -jar cloudphoto.jar upload -a album -p  'source path'` - загрузить фото из папки в альбом
 
-`java -jar cloudphoto.jar download -a album -p path` - скачать фото из альбома в папку
+`java -jar cloudphoto.jar download -a album -p 'path'` - скачать фото из альбома в папку
 
 `java -jar cloudphoto.jar list -a album` - показать список фото в альбоме
 

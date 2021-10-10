@@ -20,10 +20,14 @@ public final class List implements Runnable {
             var result = s3.list();
             result.forEach(System.out::println);
         } else {
-            var result = s3.list(album);
-            if (!result.isEmpty()) {
-                result.forEach(System.out::println);
-            } else System.out.println("Album is empty or not exist");
+            try {
+                var result = s3.list(album);
+                if(!result.isEmpty()) {
+                    result.forEach(System.out::println);
+                } else System.out.println("Album is empty");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.err.println("Album not found");
+            }
         }
     }
 }

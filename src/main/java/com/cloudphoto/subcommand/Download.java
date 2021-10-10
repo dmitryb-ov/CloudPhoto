@@ -55,7 +55,7 @@ public final class Download implements Runnable {
             } else System.out.println(album + " is empty");
 
         } catch (FileAlreadyExistsException e) {
-            System.err.println("File already exists");
+            System.err.println("File already exist");
 
         } catch (AmazonS3Exception e) {
             System.err.println("Album not found");
