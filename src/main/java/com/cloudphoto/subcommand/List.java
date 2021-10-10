@@ -1,8 +1,6 @@
 package com.cloudphoto.subcommand;
 
-import com.cloudphoto.CloudPhoto;
 import com.cloudphoto.dto.AmazonS3Dto;
-import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
