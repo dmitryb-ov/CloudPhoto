@@ -39,7 +39,7 @@
     boto3==1.18.58
     Pillow==8.3.2
 
-`main.py` с содержимым в файле `cloud_function_crop_face.py` в `src/main/resources`
+`main.py` с содержимым в файле `cloud_function_crop_face.py` в `src/main/resources` (https://github.com/dmitryb-ov/CloudPhoto/blob/task2/src/main/resources/cloud_function_crop_face_code.py)
 
 ##### Точка входа: `main.start`
 ##### Таймаут: `10`
