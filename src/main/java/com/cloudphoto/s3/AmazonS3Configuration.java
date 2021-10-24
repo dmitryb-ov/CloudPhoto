@@ -15,6 +15,8 @@ public class AmazonS3Configuration implements CrudS3 {
     private static final String ENDPOINT = "storage.yandexcloud.net";
     private static final String REGION = "ru-central1";
     private static final String BUCKET_NAME = "cloudphoto";
+    private static final String TRIGGER_PREFIX = "main_";
+    private static final String TRIGGER_SUFFIX = "_endmain";
 
     private AmazonS3 s3;
 
@@ -24,12 +26,12 @@ public class AmazonS3Configuration implements CrudS3 {
 
     @Override
     public void upload(File file, String album) {
-        s3.putObject(new PutObjectRequest(BUCKET_NAME, album + "/" + file.getName(), file));
+        s3.putObject(new PutObjectRequest(BUCKET_NAME, TRIGGER_PREFIX+album + "/" + file.getName()+TRIGGER_SUFFIX, file));
     }
 
     @Override
     public List<S3Object> download(String album) {
-        var request = new ListObjectsV2Request().withBucketName(BUCKET_NAME).withPrefix(album);
+        var request = new ListObjectsV2Request().withBucketName(BUCKET_NAME).withPrefix(TRIGGER_PREFIX+album);
         ListObjectsV2Result result;
         List<S3Object> objects = new ArrayList<>();
 
