@@ -27,6 +27,7 @@ secret_key = cfg[DEFAULT]['aws_secret_access_key']
 cfg.read('{}/keys'.format(p))
 folder_id = cfg[DEFAULT]['folderId']
 api_key = cfg[DEFAULT]['key']
+queue_name = cfg[DEFAULT]['queue_name']
 
 s3 = boto3.client(
     service_name='s3',
@@ -37,6 +38,7 @@ s3 = boto3.client(
 )
 
 cloud_vision_url = 'https://vision.api.cloud.yandex.net/vision/v1/batchAnalyze'
+sqs_url = 'https://message-queue.api.cloud.yandex.net'
 
 
 def start(event, context):
@@ -81,6 +83,7 @@ def get_faces(response, base64_file):
     response_json = json.loads(response.text)
     faces = response_json['results'][0]['results'][0]['faceDetection']['faces']
 
+    paths = []
     for face in list(faces):
         coords = face['boundingBox']['vertices']
         img_main = Image.open(BytesIO(base64.b64decode(base64_file)))
@@ -101,3 +104,28 @@ def get_faces(response, base64_file):
             Body=buffer,
             ContentType='image/jpeg'
         )
+        paths.append(final_path)
+
+    send_to_queue(get_message_queue(), paths)
+
+
+def get_message_queue():
+    session = boto3.session.Session()
+    return session.resource(
+        service_name='sqs',
+        endpoint_url=sqs_url,
+        aws_access_key_id=key_id,
+        aws_secret_access_key=secret_key,
+        region_name=region
+    )
+
+
+def send_to_queue(sqs, paths):
+    queue = sqs.get_queue_by_name(QueueName=f'{queue_name}')
+    queue.send_message(
+        MessageBody=f'Object Id: {object_id}',
+        MessageAttributes={
+            'string': str(paths),
+            'DataType': 'string'
+        }
+    )
