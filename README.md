@@ -12,7 +12,10 @@
     Выбираем сервисный аккаунт
     Создаём триггер
 
-### Шаг 3. Редактор облачной функции
+### Шаг 3. Создание очереди сообщений
+    Переходим в раздел Message Queue и создаем очередь сообщений
+
+### Шаг 4. Редактор облачной функции
 Среда выполнения: *python 3.9*
 
 В редакторе кода создаём следующие файлы:
@@ -33,13 +36,14 @@
     [default]
     folderId = <key>
     key = Api-Key <key>
+    queue_name = <name> (имя очереди, которую создали в шаге 3)
 
 `requirenets.txt` с содержимым
 
     boto3==1.18.58
     Pillow==8.3.2
 
-`main.py` с содержимым в файле `cloud_function_crop_face.py` в `src/main/resources` (https://github.com/dmitryb-ov/CloudPhoto/blob/task2/src/main/resources/cloud_function_crop_face_code.py)
+`main.py` с содержимым в файле `cloud_function_crop_face.py` в `src/main/resources/cloud_function` (https://github.com/dmitryb-ov/CloudPhoto/blob/task2/src/main/resources/cloud_function/cloud_function_crop_face_code.py)
 
 ##### Точка входа: `main.start`
 ##### Таймаут: `10`
@@ -47,3 +51,4 @@
 ### Принцип работы
 При добавлении альбома, создается файл в бакете со следующим ключом: `main_название_альбома/название_файла.jpg_endmain`
 На данный префикс `main_` и суффикс `_endmain` срабатывает триггер, отправляет фото в среду обнаружения лиц, получает координаты лиц, обрезает лица и загружает в созданный альбом с подпапкой `faces` и подпапкой, совпадающей с названием фото в котом уже хранятся обрезанные фото лиц
+В Message Queue отправляется сообщение, которое содержит имя бакета и путь до файла с лицами
