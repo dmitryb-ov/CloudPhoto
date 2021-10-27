@@ -83,7 +83,7 @@ def get_faces(response, base64_file):
     response_json = json.loads(response.text)
     faces = response_json['results'][0]['results'][0]['faceDetection']['faces']
 
-    paths = []
+    # paths = []
     for face in list(faces):
         coords = face['boundingBox']['vertices']
         img_main = Image.open(BytesIO(base64.b64decode(base64_file)))
@@ -104,9 +104,9 @@ def get_faces(response, base64_file):
             Body=buffer,
             ContentType='image/jpeg'
         )
-        paths.append(final_path)
+        # paths.append(final_path)
 
-    send_to_queue(get_message_queue(), paths)
+        send_to_queue(get_message_queue(), final_path, object_id)
 
 
 def get_message_queue():
@@ -120,12 +120,14 @@ def get_message_queue():
     )
 
 
-def send_to_queue(sqs, paths):
+def send_to_queue(sqs, paths, my_object_id):
     queue = sqs.get_queue_by_name(QueueName=f'{queue_name}')
     queue.send_message(
-        MessageBody=f'Object Id: {object_id}',
+        MessageBody=f'Object Id: {my_object_id}',
         MessageAttributes={
-            'string': str(paths),
-            'DataType': 'string'
+            'string': {
+                'StringValue': str(paths),
+                'DataType': 'string'
+            }
         }
     )
