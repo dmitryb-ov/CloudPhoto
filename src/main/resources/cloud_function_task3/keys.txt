@@ -1,4 +1,4 @@
 [default]
-folderId = b1g53s0t6ul3ii75q8ij
-key = Api-Key AQVNz5b76c89AKO3fUND_eN7irWofT6Emor3X2Aq
-queue_name = cloudphotomessagequeue
+folderId =
+key = Api-Key
+queue_name =
