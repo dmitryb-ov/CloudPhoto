@@ -1,0 +1,3 @@
+[default]
+token=5048695865:AAEvqq8WL-6Dkt61Kzv3O-d9ZIJnPel3Em8
+chat_id=-672191734
